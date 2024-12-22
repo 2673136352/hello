@@ -1,0 +1,115 @@
+#!/bin/sh
+# 设置代码路径
+GETM_BASE=${GETM_BASE:=~/GETM/getm/code}
+GOTM_BASE=${GOTM_BASE:=~/GETM/gotm/code}
+FABM_BASE=${FABM_BASE:=~/GETM/fabm/code}
+
+# 指定编译器
+compiler=${compiler:=mpifort}
+
+# 指定坐标系
+coordinate=${coordinate:=Cartesian}
+
+# 指定安装路径
+install_prefix=${install_prefix:=`pwd`}
+
+
+# 编译
+mkdir -p $compiler
+cd $compiler
+cmake -Wno-dev $GETM_BASE/src \
+      -DCMAKE_INSTALL_PREFIX=$install_prefix \
+      -DGETM_EMBED_VERSION=ON \
+      -DGETM_USE_FABM=ON \
+      -DGOTM_BASE=$GOTM_BASE \
+      -DFABM_BASE=$FABM_BASE \
+      -DCMAKE_Fortran_COMPILER=$compiler \
+      -DGETM_COORDINATE_TYPE=$coordinate \
+      -DGETM_USE_STATIC=OFF \
+      -DGETM_USE_PARALLEL=ON
+cd ..
+
+# build
+np=-j8
+cd $compiler
+make $np install
+cd ..
+mv -f $install_prefix/bin/getm ./
+
+# 删除缓冲文件
+rm -rf $compiler
+rm -rf $install_prefix/bin
+
+
+
+
+
+GETM_BASE=${GETM_BASE:=~/GETM/getm/code}
+GOTM_BASE=${GOTM_BASE:=~/GETM/gotm/code}
+FABM_BASE=${FABM_BASE:=~/GETM/fabm/code}
+compiler=${compiler:=mpifort}
+coordinate=${coordinate:=Cartesian}
+install_prefix=${install_prefix:=`pwd`}
+echo $GETM_BASE
+/home/liu/GETM/getm/code
+echo $GOTM_BASE
+/home/liu/GETM/gotm/code
+echo $FABM_BASE
+/home/liu/GETM/fabm/code
+echo $compiler
+mpifort
+echo $coordinate
+Cartesian
+echo $install_prefix
+/home/liu
+mkdir -p $compiler
+cd $compiler
+
+vim ~/.bashrc
+#netcdf4.4
+export NETCDF=~/local/netcdf4
+
+export PATH=$NETCDF/bin:$PATH
+
+export LD_LIBRARY_PATH=$NETCDF/lib:$LD_LIBRARY_PATH
+
+export CPPFLAGS='-I$NETCDF/include'
+
+export LDFLAGS='-L$NETCDF/lib'
+
+#openmpi
+export OPENMPI=~/local/openmpi
+
+export PATH=$OPENMPI/bin:$PATH
+
+export LD_LIBRARY_PATH=$OPENMPI/lib:$LD_LIBRARY_PATH
+
+export CPPFLAGS='-I$OPENMPI/include'
+
+export LDFLAGS='-L$OPENMPI/lib'
+
+source ~/.bashrc
+
+
+
+
+export NETCDF=~/local/netcdf4
+
+export PATH=$NETCDF/bin:$PATH
+
+export LD_LIBRARY_PATH=$NETCDF/lib:$LD_LIBRARY_PATH
+
+export CPPFLAGS='-I$NETCDF/include'
+
+export LDFLAGS='-L$NETCDF/lib'
+
+export OPENMPI=~/local/openmpi
+
+export PATH=$OPENMPI/bin:$PATH
+
+export LD_LIBRARY_PATH=$OPENMPI/lib:$LD_LIBRARY_PATH
+
+export CPPFLAGS='-I$OPENMPI/include'
+
+export LDFLAGS='-L$OPENMPI/lib'
+
